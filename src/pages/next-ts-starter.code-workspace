@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../OneDrive/ドキュメント/iniad_ts"
+		}
+	],
+	"settings": {
+		"typescript.tsdk": "node_modules/typescript/lib",
+		"typescript.referencesCodeLens.enabled": true
+	}
+}
