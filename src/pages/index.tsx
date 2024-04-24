@@ -5,13 +5,13 @@ const Home = () => {
   const [turnColor, setTurnColor] = useState(1);
   const [board, setBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 0, 0, 2, 1],
-    [0, 0, 0, 0, 0, 1, 2, 1],
-    [0, 0, 0, 0, 2, 1, 2, 1],
-    [0, 0, 0, 1, 2, 1, 2, 1],
-    [0, 0, 2, 1, 2, 1, 2, 1],
-    [0, 2, 1, 2, 1, 2, 1, 2],
+    [2, 2, 1, 2, 1, 2, 1, 0],
+    [1, 1, 2, 1, 2, 1, 2, 0],
+    [2, 2, 1, 2, 1, 2, 1, 0],
+    [1, 1, 2, 1, 2, 1, 2, 0],
+    [2, 2, 1, 2, 1, 2, 1, 0],
+    [1, 1, 2, 1, 2, 1, 2, 0],
+    [2, 1, 2, 1, 2, 1, 2, 0],
   ]);
   const clickHandler = (x: number, y: number) => {
     console.log(x, y);
@@ -25,11 +25,13 @@ const Home = () => {
         } else if (newBoard[y + distance][x] === 0) {
           break;
         } else if (newBoard[y + distance][x] === turnColor) {
-          for (let back = distance; back >= 0; back--) {
-            newBoard[y + back][x] = turnColor;
+          if (distance > 1) {
+            for (let back = distance; back >= 0; back--) {
+              newBoard[y + back][x] = turnColor;
+            }
+            setBoard(newBoard);
+            setTurnColor(3 - turnColor);
           }
-          setBoard(newBoard);
-          setTurnColor(3 - turnColor);
           break;
         } else if (newBoard[y + distance][x] === 3 - turnColor) {
           continue;
