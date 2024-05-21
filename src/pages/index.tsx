@@ -25,6 +25,20 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
 
+  let blackPoint = 0;
+  let whitePoint = 0;
+  for (let y = 0; y <= 7; y++) {
+    for (let x = 0; x <= 7; x++) {
+      const color = board[y][x];
+
+      if (color === 1) {
+        blackPoint++;
+      } else if (color === 2) {
+        whitePoint++;
+      }
+    }
+  }
+
   const clickHandler = (x: number, y: number) => {
     console.log(x, y);
     const newBoard = structuredClone(board);
@@ -38,6 +52,9 @@ const Home = () => {
         const checkingColor = board[y + i * dy][x + i * dx];
         if (checkingColor === undefined) {
           break;
+        }
+        if (checkingColor === 3 - turnColor) {
+          maybeTurnables.push({ x: x + i * dx, y: y + i * dy });
         } else if (checkingColor === 0) {
           break;
         } else if (checkingColor === turnColor && i !== 1) {
@@ -48,21 +65,22 @@ const Home = () => {
             newBoard[item.y][item.x] = turnColor;
           }
           newBoard[y][x] = turnColor;
-          setBoard(newBoard);
-          setTurnColor(3 - turnColor);
-          // }
-          break;
-        } else if (checkingColor === 3 - turnColor) {
-          if (maybeTurnables.length > 0) {
-            maybeTurnables.push({ x: x + i * dx, y: y + i * dy });
-          }
         }
+        break;
       }
     }
+    setBoard(newBoard);
+    setTurnColor(3 - turnColor);
   };
 
   return (
     <div className={styles.container}>
+      {}
+      <div className={styles.boardStyle}>
+        黒:{blackPoint}個
+        <br />
+        白:{whitePoint}個
+      </div>
       <div className={styles.boardStyle}>
         {board.map((row, y) =>
           row.map((color, x) => (
@@ -76,6 +94,10 @@ const Home = () => {
             </div>
           )),
         )}
+      </div>
+      <div className={styles.player}>
+        {turnColor === 1 ? '黒' : '白'}
+        のターンです
       </div>
     </div>
   );
